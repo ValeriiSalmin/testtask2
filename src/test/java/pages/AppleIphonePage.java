@@ -36,6 +36,12 @@ public class AppleIphonePage extends BasePage {
     @FindBy(css = ".toOrder")
     WebElement buyItem;
 
+    @FindBy(css = "a.exponea-banner.exponea-popup-banner.exponea-animate")
+    List<WebElement> adPopup;
+
+    @FindBy(css = "span.exponea-close")
+    WebElement closeAdPopup;
+
     public AppleIphonePage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
         PageFactory.initElements(driver, this);
@@ -68,6 +74,10 @@ public class AppleIphonePage extends BasePage {
     }
 
     public void addToBasket() {
+        if (adPopup.size()!=0){
+            wait.until(ExpectedConditions.visibilityOf(closeAdPopup));
+            closeAdPopup.click();
+        }
         buyItem.click();
         wait.until(ExpectedConditions.visibilityOf(webDriver.findElement(By.cssSelector(".cart-total"))));
     }

@@ -15,8 +15,10 @@ public class SQLHelper {
     }
 
     public static void setUpConnection() throws Exception {
-        conn = DriverManager.
-                getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
+        if (conn==null) {
+            conn = DriverManager.
+                    getConnection("jdbc:h2:tcp://192.168.135.127/~/test", "sa", "");
+        }
     }
 
     public static void closeConnection(){
