@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Log4Test;
 
@@ -13,30 +14,29 @@ import utils.Log4Test;
 public class SearchPage extends BasePage {
 
     @FindBy(xpath = "//div[@class='g-i-tile-i-title clearfix']/a[@href]")
-    WebElement searchProductLink;
+    WebElement productLink;
 
     @FindBy(xpath = "(//*[@class='toOrder'])[1]")
     WebElement addToBasketFirstItem;
 
-    public SearchPage(WebDriver driver, WebDriverWait wait){
-        super(driver,wait);
-        PageFactory.initElements(driver,this);
+    public SearchPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
+        PageFactory.initElements(driver, this);
     }
 
-    private WebElement searchLinkElem;
-
-    public String verifyProductLink() {
-        Log4Test.info("Verify product link");
-        return searchProductLink.getText().toLowerCase();
+    public String verifyProduct() {
+        Log4Test.info("Verify product");
+        return productLink.getText().toLowerCase();
     }
 
-    public void openProductLink() {
+    public void openProduct() {
         Log4Test.info("Open product characteristics");
-        searchLinkElem = elementIsLocated(getLocator("searchProductLink"));
-        searchLinkElem.click();
+        wait.until(ExpectedConditions.visibilityOf(productLink));
+        productLink.click();
     }
 
-    public void addToBasketFirstProduct(){
+    public void addToBasketFirstProduct() {
+        Log4Test.info("Add product to basket");
         addToBasketFirstItem.click();
     }
 }

@@ -15,13 +15,13 @@
 
     <profiles>
         <profile>
-            <id>firefox_local</id>
+            <id>firefox</id>
             <properties>
-                <browser.name>FIRE_FOX</browser.name>
+                <browser.name>FIREFOX</browser.name>
             </properties>
         </profile>
         <profile>
-            <id>chrome_local</id>
+            <id>chrome</id>
             <properties>
                 <browser.name>CHROME</browser.name>
             </properties>
@@ -47,6 +47,14 @@
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
         </plugins>
 
     </build>
@@ -67,12 +75,11 @@
             <artifactId>log4j</artifactId>
             <version>1.2.14</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.seleniumhq.selenium</groupId>-->
-            <!--<artifactId>selenium-firefox-driver</artifactId>-->
-            <!--<version>2.53.0</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.196</version>
+        </dependency>
     </dependencies>
 
 </project>

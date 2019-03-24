@@ -4,29 +4,42 @@ import java.sql.*;
 
 public class SQLHelper {
 
-    Connection conn;
+    static Connection conn;
 
-    public void setUpConnection() throws Exception {
-        conn = DriverManager.
-                getConnection("jdbc:h2:~/test", "sa", "");
-    }
-
-    public void closeConnection() throws Exception {
-        if (conn != null) { conn.close();
+    public SQLHelper(){
+        try {
+            setUpConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public void insertRecord(Date date, Double price1, Double price2) throws SQLException {
-        PreparedStatement prep = conn.prepareStatement("INSERT INTO TESTS(Date, Price1, Price2) VALUES(?, ?, ?)");
-        prep.setString(1, String.valueOf(date));
-        prep.setString(2, String.valueOf(price1));
-        prep.setString(3, String.valueOf(price2));
+    public static void setUpConnection() throws Exception {
+        conn = DriverManager.
+                getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
+    }
+
+    public static void closeConnection(){
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void insertRecord(Double price1, Double price2) throws SQLException {
+        PreparedStatement prep = conn.prepareStatement("INSERT INTO TESTS(Date, PRICE_Iphone7, PRICE_Iphone7Plus) VALUES(GETDATE(), ?, ?)");
+        //prep.setString(1, String.valueOf(date));
+        prep.setString(1, String.valueOf(price1));
+        prep.setString(2, String.valueOf(price2));
         prep.executeUpdate();
     }
 
-    public void writePricesToDB(Date date, Double price1, Double price2) throws Exception {
+    public static void writePricesToDB(Double price1, Double price2) throws Exception {
         setUpConnection();
-        insertRecord(date, price1,  price2);
+        insertRecord(price1,  price2);
         closeConnection();
     }
 }

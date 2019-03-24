@@ -21,7 +21,7 @@ public class WebDriverFactory {
 
     public static WebDriver getWebDriver(BrowserTypes browserType) throws IOException {
         switch (browserType) {
-            case FIRE_FOX:
+            case FIREFOX:
                 return new FirefoxDriver();
             case CHROME:
                 ChromeOptions chromeOptions = new ChromeOptions();

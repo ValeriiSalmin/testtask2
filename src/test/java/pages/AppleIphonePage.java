@@ -1,26 +1,74 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.Log4Test;
 
+import java.util.List;
 
 public class AppleIphonePage extends BasePage {
 
-    AppleIphonePage(WebDriver driver, WebDriverWait wait){
+    @FindBy(css = "li[name='characteristics'] a[href]")
+    WebElement characheristicsTab;
+
+    @FindBy(css = "div.chars-value")
+    List<WebElement> characheristics;
+
+    @FindBy(xpath = "//*[contains(text(),'Ширина')]/../..//div[@class='chars-value']")
+    WebElement iphoneWidth;
+
+    @FindBy(xpath = "//*[contains(text(),'Висота')]/../..//div[@class='chars-value']")
+    WebElement iphoneHeight;
+
+    @FindBy(xpath = "//*[contains(text(),'Діагональ екрана')]/../../..//div[@class='chars-value']//a")
+    WebElement iphoneDisplay;
+
+    @FindBy(xpath = "//*[contains(text(),\"Оперативна пам'ять\")]/../../..//div[@class='chars-value']//a")
+    WebElement iphoneMemory;
+
+    @FindBy(css = "[name='sticky_price']")
+    WebElement iphonePrice;
+
+    @FindBy(css = ".toOrder")
+    WebElement buyItem;
+
+    public AppleIphonePage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
     }
 
-    protected WebElement productContent;
+    public void goToCharisticsTab() {
+        characheristicsTab.click();
+    }
 
-    public WebElement verifyProductContent() {
+    public String getWidth() {
+        return iphoneWidth.getText();
+    }
 
-        Log4Test.info("Verify product content");
+    public String getHeight() {
+        return iphoneHeight.getText();
+    }
 
-        return productContent = elementIsLocated(getLocator("productDescription"));
+    public String getDisplay() throws InterruptedException {
+        Thread.sleep(1000);
+        return iphoneDisplay.getText();
+    }
 
+    public String getMemory() {
+        return iphoneMemory.getText();
+    }
+
+    public Double getPrice() {
+        String parsedPrice = iphonePrice.getText().replaceAll(" ", "");
+        return Double.valueOf(parsedPrice);
+    }
+
+    public void addToBasket() {
+        buyItem.click();
+        wait.until(ExpectedConditions.visibilityOf(webDriver.findElement(By.cssSelector(".cart-total"))));
     }
 }

@@ -5,6 +5,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ui_tests.TestData;
+import utils.SQLHelper;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +14,7 @@ public class TestBase {
 
     protected WebDriver webDriver;
     protected WebDriverWait wait;
-    
+
     @BeforeSuite
     public void setUp() throws IOException
     {
@@ -30,6 +31,7 @@ public class TestBase {
     @AfterSuite
     public void tearDown() {
         webDriver.quit();
+        SQLHelper.closeConnection();
     }
 }
 
